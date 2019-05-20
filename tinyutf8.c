@@ -11,9 +11,11 @@ int main(int argc, char** argv){
     int numbytes = 0;
 
     if (val < 0x80)     numbytes = 1;
-    else if (val < 0x800)    numbytes = 2;
-    else if (val < 0x10000)  numbytes = 3;
-    else if (val < 0x11000)  numbytes = 4;
+    else if (val < 0x00000800)  numbytes = 2;
+    else if (val < 0x00010000)  numbytes = 3;
+    else if (val < 0x00200000)  numbytes = 4;
+    else if (val < 0x04000000)  numbytes = 5;
+    else if (val < 0x80000000)  numbytes = 6;
     else{
         fprintf(stderr, "Illegal codepoint.\n");
         exitcode = 1;
@@ -37,6 +39,14 @@ int main(int argc, char** argv){
         case 4:
             msb_mask = 0xf0; //1111 0000
             totalbits = 21; firstbits = 3;
+            break;
+        case 5:
+            msb_mask = 0xf8; //1111 1000
+            totalbits = 26; firstbits = 2;
+            break;
+        case 6:
+            msb_mask = 0xfc; //1111 1100
+            totalbits = 31; firstbits = 1;
             break;
         default:
             fprintf(stderr, "Unknown error.\n");
