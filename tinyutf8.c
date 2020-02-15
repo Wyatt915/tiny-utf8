@@ -1,3 +1,8 @@
+/*
+ * tinyutf8.c
+ * Copyright © 2020 Wyatt Sheffield
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
