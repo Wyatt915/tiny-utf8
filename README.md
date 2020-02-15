@@ -26,7 +26,7 @@ Once selected, it will be inserted wherever the cursor is active. On my system, 
 directory in my PATH, and have copied both UnicodeNamesList.txt and unicode-select.sh into it. I
 also have the ~/bin directory in my PATH, into which I have placed the tiny-utf8 executable. The
 most up-to-date version of the NamesList can always be found
-(here)[https://unicode.org/Public/UNIDATA/NamesList.txt]. I am aware that the file explicitly states
+[here](https://unicode.org/Public/UNIDATA/NamesList.txt). I am aware that the file explicitly states
 that it is not to be parsed for machine-readable information. I do not care and have done it anyway.
 
 License

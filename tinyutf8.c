@@ -43,9 +43,8 @@ int int_to_utf8(uint32_t val){
 }
 
 int main(int argc, char** argv){
-    char* input = malloc(10*sizeof(char));
+    char input[16];
     fgets(input, 10, stdin);
     uint32_t val = strtol(input, NULL, 16);
-    free(input); input = NULL;
     return int_to_utf8(val);
 }
