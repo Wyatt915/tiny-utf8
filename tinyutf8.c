@@ -8,18 +8,20 @@
 #include <stdint.h>
 
 int int_to_utf8(uint32_t val){
-    int width = 0; //The width of the output character in bytes.
+    uint8_t width; //The width of the output character in bytes.
     if (val < 0x80){
         //trivial case - this is just ASCII. We're done.
         putchar(val);
         return 0;
     }
-    else if (val < 0x00000800)  width = 2;
-    else if (val < 0x00010000)  width = 3;
-    else if (val < 0x00200000)  width = 4;
-    else if (val < 0x04000000)  width = 5;
-    else if (val < 0x80000000)  width = 6;
-    else{
+    //else if (val < 0x00000800)  width = 2; // 20 leading zeroes
+    //else if (val < 0x00010000)  width = 3; // 15 leading zeroes
+    //else if (val < 0x00200000)  width = 4; // 10 leading zeroes
+    //else if (val < 0x04000000)  width = 5; // 5  leading zeroes
+    //else if (val < 0x80000000)  width = 6; // 0  leading zeroes
+    // This means that the width is 5 - ((leadingzeroes-1/5)-1)
+    width = 6 - ((__builtin_clz(val)-1)/5);
+    if (width > 6){
         fprintf(stderr, "Illegal codepoint.\n");
         return 1;
     }
@@ -35,8 +37,7 @@ int int_to_utf8(uint32_t val){
     //The remaining bytes are prefixed with 0b10 and contain 6 bits of data.
     char byte;
     for (int i = width - 2; i >= 0; i--){
-        byte = 0x3f & (val >> 6 * i); //0x3f isolates the six least significant bits
-        byte |= 0x80;
+        byte = (0x3f & (val >> 6 * i)) | 0x80; //0x3f isolates the six least significant bits
         putchar(byte);
     }
     return 0;
@@ -44,7 +45,7 @@ int int_to_utf8(uint32_t val){
 
 int main(int argc, char** argv){
     char input[16];
-    fgets(input, 10, stdin);
+    fgets(input, 15, stdin);
     uint32_t val = strtol(input, NULL, 16);
     return int_to_utf8(val);
 }
