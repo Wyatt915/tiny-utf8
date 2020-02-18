@@ -14,17 +14,17 @@ int int_to_utf8(uint32_t val){
         putchar(val);
         return 0;
     }
+    else if (val > 0x80000000){
+        fprintf(stderr, "Illegal codepoint.\n");
+        return 1;
+    }
     //else if (val < 0x00000800)  width = 2; // 20 leading zeroes
     //else if (val < 0x00010000)  width = 3; // 15 leading zeroes
     //else if (val < 0x00200000)  width = 4; // 10 leading zeroes
     //else if (val < 0x04000000)  width = 5; // 5  leading zeroes
     //else if (val < 0x80000000)  width = 6; // 0  leading zeroes
-    // This means that the width is 5 - ((leadingzeroes-1/5)-1)
+    // This means that the width is 6 - (leadingzeroes-1/5)
     width = 6 - ((__builtin_clz(val)-1)/5);
-    if (width > 6){
-        fprintf(stderr, "Illegal codepoint.\n");
-        return 1;
-    }
 
     uint8_t firstbits = 7 - width;
     uint8_t totalbits = firstbits + (width - 1) * 6;
