@@ -1,7 +1,8 @@
 tiny-utf8
 =========
 
-Takes a hexadecimal codepoint from stdin and prints the resulting character to stdout. That's it.
+Read a hexadecimal codepoint from stdin and print the resulting character to stdout. Alternatively, read a UTF-8
+character from stdin and print the codepoint.
 
 Usage
 -----
@@ -13,8 +14,10 @@ $ gcc tinyutf8.c -o tiny-utf8
 
 To run:
 ```
-$ echo 203d | tiny-utf8
+$ echo U+203d | tiny-utf8
 ‽
+$ echo ‽ | tiny-utf8
+U+203D
 ```
 
 Helper Script
